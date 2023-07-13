@@ -42,6 +42,7 @@ public class SeleniumRunner {
         driver.get("https://www.saucedemo.com/");
 
         LoginPage loginPage = new LoginPage(driver);
+        loginPage.performLogin();
 
 
 //        Add the sauce labs Backpack, Sauce labs Onesie, and Sauce Labs Bolt T-shirt to
