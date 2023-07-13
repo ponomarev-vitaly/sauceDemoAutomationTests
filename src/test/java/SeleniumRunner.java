@@ -8,11 +8,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.LoginPage;
 
 import java.util.List;
 
 public class SeleniumRunner {
+
+
     private static WebDriver driver;
+    private static WebDriverWait wait;
     @BeforeAll
     public static void setUpDriver(){
         WebDriverManager.chromedriver().setup();
@@ -23,16 +28,21 @@ public class SeleniumRunner {
 
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
-        driver.get("https://www.saucedemo.com/");
+
+    }
+
+    @BeforeAll
+    public static void setUpWait(){
+        wait = new WebDriverWait(driver, 15);
+
     }
 
     @Test
     public void addToCart() {
+        driver.get("https://www.saucedemo.com/");
 
-//        Login
-        driver.findElement(By.xpath("//input[@id='user-name']")).sendKeys("standard_user");
-        driver.findElement(By.xpath("//input[@id='password']")).sendKeys("secret_sauce");
-        driver.findElement(By.xpath("(//input[@id='login-button'])[1]")).click();
+        LoginPage loginPage = new LoginPage(driver);
+
 
 //        Add the sauce labs Backpack, Sauce labs Onesie, and Sauce Labs Bolt T-shirt to
 //        the cart
@@ -120,8 +130,8 @@ public class SeleniumRunner {
 
     }
 
-    @AfterAll
-    public static void tearDownDriver(){
-        driver.quit();
-    }
+//    @AfterAll
+//    public static void tearDownDriver(){
+//        driver.quit();
+//    }
 }
